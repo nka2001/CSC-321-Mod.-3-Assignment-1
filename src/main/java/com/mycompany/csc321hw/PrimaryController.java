@@ -20,7 +20,7 @@ public class PrimaryController {
     @FXML
     private TextField inputArea;
     @FXML
-    private ListView<ArrayList<Character>> listView;
+    private ListView<ArrayList<String>> listView;
 
     @FXML
     private void CloseHW(ActionEvent event) {
@@ -37,8 +37,12 @@ public class PrimaryController {
         
         la.analyze();
         
-        ObservableList<ArrayList<Character>> i = listView.getItems();
-        i.add(la.getKeyword());
+        ObservableList<ArrayList<String>> i = listView.getItems();
+        i.add(la.getSeperators());
+        i.add(la.getOperators());
+        //i.add(la.getConstants());
+        i.add(la.getDelimeters());
+        System.out.println(la.getSnippet());
     }
 
     public void initialize() {

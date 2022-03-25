@@ -11,78 +11,153 @@ import java.util.ArrayList;
  * @author nicka
  */
 public class LexemAnalyzer {
-    
+
     private String snippet;
-    
-    private ArrayList<Character> keywords;
-    
+
+    private ArrayList<String> seperator;//arraylist for holding seperators 
+    private ArrayList<String> operator;//arrayList for holding operators 
+    private ArrayList<String> keyword;//arrayList for holding keywords 
+    private ArrayList<String> constants;//arrayList for holding constants 
+    private ArrayList<String> delimeters;
+
     private ArrayList<Character> programSnip;
-    
-    
-    
-    
-    
-    
+
     private String delimeter = ";";
-    
-    
-    
-    
-    
-    public LexemAnalyzer(){
+
+    public LexemAnalyzer() {
         snippet = "default";
         programSnip = new ArrayList<Character>();
         char current;
-         for(int i = 0; i < snippet.length(); i++){
-           current = snippet.charAt(i);
-          programSnip.add(current);
-          
-       }
-        
-        
-        
+        for (int i = 0; i < snippet.length(); i++) {
+            current = snippet.charAt(i);
+            programSnip.add(current);
+
+        }
+
     }
-    public LexemAnalyzer(String str){
+
+    public LexemAnalyzer(String str) {
         this.snippet = str;
         programSnip = new ArrayList<Character>();
         char current;
-         for(int i = 0; i < snippet.length(); i++){
-           current = snippet.charAt(i);
-          programSnip.add(current);
-          
-       }
-        
-        
-    }
-    
-    
-    public void analyze(){
-        
-       keywords = new ArrayList<Character>();//initialize arrayList
+        for (int i = 0; i < snippet.length(); i++) {
+            current = snippet.charAt(i);
+            programSnip.add(current);
 
-       for(int i = 0; i < snippet.length(); i++){//for loop for going through string to pick it apart
-           if(programSnip.get(i).equals(';')){//if the programSnip (array list from constructors) at index i is equal to a semicolon, then
-               keywords.add(';');//the keywords arrayList has the semicolon character added to it 
-           }
-       }
-        
-        
-        
-        
-        
-        
+        }
+
     }
-    
-    public ArrayList<Character> getKeyword(){
-        return this.keywords;
+
+    public void analyze() {
+
+        /*
+       seperator analyzer 
+         */
+        seperator = new ArrayList<String>();//initialize arrayList
+
+        for (int i = 0; i < snippet.length(); i++) {//for loop for going through string to pick it apart
+            if (programSnip.get(i).equals(';')) {//if the programSnip (array list from constructors) at index i is equal to a semicolon, then
+                seperator.add(";");//the keywords arrayList has the semicolon character added to it 
+            }
+        }
+
+        /*
+        operator analyzer
+         */
+        char operator1 = '<';
+        char operator2 = ':';
+
+        operator = new ArrayList<String>();
+
+        for (int i = 0; i < snippet.length(); i++) {
+            if (programSnip.get(i).equals(operator2) && programSnip.get(i + 1).equals(operator2)) {
+                operator.add("::");
+            }
+            if (programSnip.get(i).equals(operator1) && programSnip.get(i + 1).equals(operator1)) {
+                operator.add("<<");
+            }
+        }
+
+        /*
+       keyword analyzer
+         */
+        String keyword1 = "int";
+        String keyword2 = "return";
+
+        keyword = new ArrayList<String>();
+
+        for (int i = 0; i < snippet.length(); i++) {
+
+        }
+
+        /*
+       constants analyzer 
+         */
+        constants = new ArrayList<String>();
+        char add;
+        String finalStr = "";
+        for (int i = 0; i < snippet.length(); i++) {
+
+            if (programSnip.get(i).equals('\"')) {
+                int position = programSnip.get(i);
+                for (int j = position; j < snippet.length(); j++) {
+                    if (!programSnip.get(j).equals('\"')) {
+                        finalStr += programSnip.get(j);
+                    }
+
+                }
+
+            }
+
+            constants.add(finalStr);
+        }
+
+        /*
+       delimeter analyzer
+         */
+        delimeters = new ArrayList<String>();
+
+        char deli1 = '(';
+        char deli2 = ')';
+        char deli3 = '{';
+        char deli4 = '}';
+
+        for (int i = 0; i < snippet.length(); i++) {
+            if (programSnip.get(i).equals(deli1)) {
+                delimeters.add("(");
+            }
+            if (programSnip.get(i).equals(deli2)) {
+                delimeters.add(")");
+            }
+            if (programSnip.get(i).equals(deli3)) {
+                delimeters.add("{");
+            }
+            if (programSnip.get(i).equals(deli4)) {
+                delimeters.add("}");
+            }
+
+        }
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public ArrayList<Character> getSnippet() {
+        return this.programSnip;
+    }
+
+    public ArrayList<String> getSeperators() {
+        return this.seperator;
+    }
+
+    public ArrayList<String> getOperators() {
+        return this.operator;
+    }
+
+    public ArrayList<String> getConstants() {
+        return this.constants;
+    }
+
+    public ArrayList<String> getDelimeters() {
+        return this.delimeters;
+    }
+
 }
