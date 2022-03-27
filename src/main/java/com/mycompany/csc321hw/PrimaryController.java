@@ -42,6 +42,7 @@ public class PrimaryController {
         i.add(la.getOperators());
         //i.add(la.getConstants());
         i.add(la.getDelimeters());
+        i.add(la.getIntLits());
         System.out.println(la.getSnippet());
     }
 

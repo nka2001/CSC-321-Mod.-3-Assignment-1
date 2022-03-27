@@ -19,6 +19,7 @@ public class LexemAnalyzer {
     private ArrayList<String> keyword;//arrayList for holding keywords 
     private ArrayList<String> constants;//arrayList for holding constants 
     private ArrayList<String> delimeters;
+    private ArrayList<String> integerLit;
 
     private ArrayList<Character> programSnip;
 
@@ -138,7 +139,29 @@ public class LexemAnalyzer {
 
         }
 
+        /*
+        integer literal analyzer
+        */
+        
+        integerLit = new ArrayList<String>();
+        
+        String str = "";
+        
+        
+        for(int i = 0; i < snippet.length(); i++){
+            
+            if(Character.isDigit(programSnip.get(i))){
+                System.out.println("TEST");
+                str += programSnip.get(i);
+            }
+            
+            
+        }
+        
+        integerLit.add(str);
     }
+    
+    
 
     public ArrayList<Character> getSnippet() {
         return this.programSnip;
@@ -158,6 +181,10 @@ public class LexemAnalyzer {
 
     public ArrayList<String> getDelimeters() {
         return this.delimeters;
+    }
+    
+    public ArrayList<String> getIntLits(){
+        return this.integerLit;
     }
 
 }
